@@ -10,7 +10,24 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
+  }
 
+  componentDidMount() {
+    this.updateRepoList();
+  }
+
+  updateRepoList() {
+    $.ajax({
+      url: 'http://localhost:1128/repos',
+      method: 'GET',
+      success: (repos) => {
+        console.log(repos);
+        this.setState({
+          repos: repos
+        });
+      },
+      error: () => console.log('Error getting top 25')
+    });
   }
 
   search (term) {

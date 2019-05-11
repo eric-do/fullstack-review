@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
 
-// db.on('error', console.error.bind(console, 'connection error'));
-// db.once('open', () => {
-
-// });
-
 let repoSchema = mongoose.Schema({
   id:           {type: Number,  // repo.id
                  unique: true
@@ -21,13 +16,12 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (repos) => {
+let save = (repos, callback) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
   console.log('trying to save record(s)');
-  
-  repos.forEach(repo => {
+  let reposArray = repos.map(repo => {
     let newRepo = new Repo({
       id:           repo.id,            
       name:         repo.name,         
@@ -39,11 +33,24 @@ let save = (repos) => {
       owner_login:  repo.owner.login  
     });
 
-    newRepo.save((err, repo) => {
-      if (err) { return console.error(err); }
-      console.log(`inserted ${repo.name} to fetcher db`);
-    })
+    return newRepo.save();
+  });
+  Promise.all(reposArray)
+  .then(() => {
+    console.log('Successfully added all');
+    callback();
+  })
+  .catch((e) => {
+    console.error(e);
   });
 }
 
+let getTop25 = (callback) => {
+  Repo.find({}, 'name html_url forks_count forks_url owner_login')
+  .limit(25)
+  .sort({forks_count: -1})
+  .exec(callback);
+}
+
 module.exports.save = save;
+module.exports.getTop25 = getTop25;

@@ -20,11 +20,12 @@ let getReposByUsername = (req, res) => {
     }
   };
 
-  request(options, (err, res, body) => {
-    if (err) { return console.error("Error"); }
+  request(options, (error, response, body) => {
+    if (error) { return console.error(error); }
     var results = JSON.parse(body).items;
-    console.log(`Request returned ${results.length} items`);
-    db.save(results);
+    db.save(results, (err, data) => {
+      res.sendStatus(200);
+    });
   });
 
 }
