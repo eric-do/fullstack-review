@@ -36,7 +36,12 @@ class App extends React.Component {
       url: 'http://localhost:1128/repos',
       method: 'POST',
       data: {username: term.toString()},
-      success: () => console.log('success'),
+      success: (repos) => {
+        console.log('success');
+        this.setState({
+          repos: repos
+        });
+      },
       error: () => console.log('error')
     });
   }
