@@ -18,7 +18,7 @@ const RepoList = (props) => (
         <tr>
           <td>{repo.owner_login}</td>
           <td><a href={repo.html_url}>{repo.name}</a> </td>
-          <td><a href={repo.forks_url}>{repo.forks_count}</a></td>
+          <td>{repo.forks_count}</td>
         </tr>
       ))
     }
