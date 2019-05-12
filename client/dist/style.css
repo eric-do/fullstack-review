@@ -10,6 +10,20 @@ h4 {
   margin: 5px 0px;
 }
 
-#status {
+.status {
   padding: 10px 0px;
 } 
+
+.nav-item {
+  display: inline;
+  padding-right: 30px;
+}
+
+ul {
+  padding-left: 0px;
+}
+
+.nav-item {
+  color: darkcyan;
+  text-decoration: underline;
+}

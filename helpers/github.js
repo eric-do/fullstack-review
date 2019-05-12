@@ -24,11 +24,34 @@ let getReposByUsername = (req, res, callback) => {
     if (error) { return console.error(error); }
     var results = JSON.parse(body).items;
     db.save(results, (err, data) => {
-      //res.sendStatus(200);
       callback();
     });
   });
 
 }
 
+let getContributorsByRepo = (url, callback) => {
+  // Input: a contributors url, a callback function
+  // We don't really need any other options except the url and headers
+  // The url should respond with an array of contributors
+  // We pass this array to the callback
+  var options = {
+    url: url,
+    headers: {
+      'User-Agent': 'request',
+      'Authorization': `token ${config.TOKEN}`
+    }
+  };
+
+  request(options, (err, res, body) => {
+    if (err) { return console.error(err); }
+    var results = JSON.parse(body);
+    console.log(`URL: ${url}
+                 Contributors: ${results.length}`);
+    callback(null, results);
+  });
+
+}
+
 module.exports.getReposByUsername = getReposByUsername;
+module.exports.getContributorsByRepo = getContributorsByRepo;

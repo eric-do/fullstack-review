@@ -31,6 +31,17 @@ app.get('/repos', function (req, res) {
   });
 });
 
+app.get('/users', function (req, res) {
+  // TODO - your code here!
+  // This route should send back the top 25 repos
+  db.getUsers((err, data) => {
+    if (err) { return console.error(err); }
+    //console.log(data.length);
+    console.log(data);
+    res.send(JSON.parse(data));
+  });
+});
+
 let port = 1128;
 
 app.listen(port, function() {

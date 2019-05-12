@@ -3,7 +3,7 @@ import React from 'react';
 const RepoList = (props) => (
   <div>
     <h4> Repo List Component </h4>
-    <div id="status">There are {props.repos.length} repos.</div>
+    <div className="status">There are {props.repos.length} repos.</div>
     <table>
     <thead>
         <tr>
