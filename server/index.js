@@ -31,7 +31,7 @@ app.get('/repos', function (req, res) {
   });
 });
 
-app.get('/users', function (req, res) {
+app.get('/users', (req, res) => {
   // TODO - your code here!
   // This route should send back the top 25 repos
   db.getUsers((err, data) => {
@@ -39,6 +39,15 @@ app.get('/users', function (req, res) {
     //console.log(data.length);
     console.log(data);
     res.send(JSON.parse(data));
+  });
+});
+
+app.post('/friends', (req, res) => {
+  var username = req.body.username;
+  db.getFriends(username, (err, data) => {
+    if (err) { return console.error(err); }
+    console.log('sending data');
+    res.send(JSON.stringify(data));
   });
 });
 

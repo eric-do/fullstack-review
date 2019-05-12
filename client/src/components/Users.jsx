@@ -1,5 +1,5 @@
 import React from 'react';
-import User from './User.jsx';
+import UserEntry from './UserEntry.jsx';
 
 var Users = (props) => (
   // Props:
@@ -17,7 +17,7 @@ var Users = (props) => (
       <tbody>
     {
       Object.keys(props.users).map(user => (
-        <User user={user} count={props.users[user]}/>
+        <UserEntry changeView={props.changeView} friendsHandler={props.friendsHandler} user={user} count={props.users[user]}/>
       ))
     }
     </tbody>

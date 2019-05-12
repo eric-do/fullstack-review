@@ -21,7 +21,8 @@ let contributorSchema = mongoose.Schema({
   repo:         {type: Schema.Types.ObjectId, ref: 'Repo'},
   repo_name:    String,
   login:        String,
-  html_url:     String
+  html_url:     String,
+  owner_login:  String
 });
 
 //contributorSchema.index({repo: 1, login: 1}, {unique: true});
@@ -97,7 +98,8 @@ let saveContributors = (contributors, repo, callback) => {
       repo: repo._id,
       repo_name: repo.name,
       login: contributor.login,
-      html_url: contributor.html_url
+      html_url: contributor.html_url,
+      owner_login: repo.owner_login
     }
   ));
   Contributor.insertMany(newContributors)
@@ -119,7 +121,18 @@ let getUsers = (callback) => {
   });
 }
 
+let getFriends = (owner, callback) => {
+  Contributor.find({owner_login: owner, login: {$ne: owner}})
+  .exec((err, data) => {
+    var friendsArray = data.map(friendObj => friendObj.login);
+    console.log(`${owner}'s friends: `);
+    console.log(friendsArray);
+    callback(null, friendsArray);
+  })
+}
+
 module.exports.save = save;
 module.exports.getTop25 = getTop25;
 module.exports.saveContributors = saveContributors;
 module.exports.getUsers = getUsers;
+module.exports.getFriends = getFriends;
