@@ -14,9 +14,10 @@ app.post('/repos', function (req, res) {
   // and get the repo information from the github API, then
   // save the repo information in the database
   github.getReposByUsername(req, res, (err) => {
+    if (err) { return console.error(err); }
     db.getTop25((err, data) => {
       if (err) { return console.error(err); }
-      res.send(data);
+      res.json(data);
     })
   });
 });
@@ -47,7 +48,7 @@ app.post('/friends', (req, res) => {
   db.getFriends(username, (err, data) => {
     if (err) { return console.error(err); }
     console.log('sending data');
-    res.send(JSON.stringify(data));
+    res.json(data);
   });
 });
 

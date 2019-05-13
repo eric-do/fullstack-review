@@ -6,7 +6,8 @@ mongoose.connect('mongodb://localhost/fetcher');
 let repoSchema = mongoose.Schema({
   _id:          Schema.Types.ObjectId,
   id:           {type: Number,  // repo.id
-                 unique: true
+                 unique: true, 
+                 required: true
                 },         
   name:         String,         // repo.name
   html_url:     String,         // repo.html_url

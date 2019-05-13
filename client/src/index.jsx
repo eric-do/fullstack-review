@@ -66,10 +66,10 @@ class App extends React.Component {
     $.ajax({
       url: 'http://localhost:1128/friends',
       method: 'POST', 
-      data: {username: username.toString()},
+      data: {username: username},
       success: (friends) => {
         this.setState({
-          friends: JSON.parse(friends)
+          friends: friends
         })
       },
       error: () => console.log('Error getting friends')
@@ -81,7 +81,7 @@ class App extends React.Component {
     $.ajax({
       url: 'http://localhost:1128/repos',
       method: 'POST',
-      data: {username: term.toString()},
+      data: {username: term},
       success: (repos) => {
         console.log('success');
         this.setState({
